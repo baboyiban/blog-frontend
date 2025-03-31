@@ -12,7 +12,7 @@ services:
     networks:
       - npm-network
 
-  app:
+  frontend: # Changed "app" to "frontend"
     platform: linux/amd64
     image: "chl11wq12/blog-frontend:v0.1.0"
     build:

@@ -1,28 +1,10 @@
 services:
-  npm:
-    image: "jc21/nginx-proxy-manager:latest"
-    ports:
-      - "80:80"
-      - "81:81"
-      - "443:443"
-    volumes:
-      - ./npm-data:/data
-      - ./letsencrypt:/etc/letsencrypt
-    restart: unless-stopped
-    networks:
-      - npm-network
-
-  frontend: # Changed "app" to "frontend"
+  frontend:
     platform: linux/amd64
-    image: "chl11wq12/blog-frontend:v0.1.0"
+    image: chl11wq12/blog-frontend:v0.1.0
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "3000:80"
-    networks:
-      - npm-network
-
-networks:
-  npm-network:
-    driver: bridge
+    restart: unless-stopped

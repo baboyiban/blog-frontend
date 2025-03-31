@@ -13,6 +13,7 @@ services:
       - npm-network
 
   app:
+    platform: linux/amd64
     image: "chl11wq12/blog-frontend:v0.1.0"
     build:
       context: .

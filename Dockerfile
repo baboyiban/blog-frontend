@@ -4,8 +4,8 @@ FROM oven/bun:latest AS builder
 # 작업 디렉토리 설정
 WORKDIR /app
 
-# package.json 및 bun.lockb 복사
-COPY package.json bun.lockb ./
+# package.json 및 bun.lock 복사
+COPY package.json bun.lock ./
 
 # 의존성 설치
 RUN bun install

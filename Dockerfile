@@ -16,14 +16,21 @@ COPY . .
 # 빌드 실행 (Astro 빌드)
 RUN bun run build
 
-# Nginx 이미지 사용 (서버 환경)
+# === 배포 ===
 FROM nginx:alpine
 
-# 빌드 결과 복사
+# 환경 변수 복사
+ARG DOMAIN  # docker build 시에 전달될 환경 변수 정의
+ENV DOMAIN ${DOMAIN}  # 컨테이너 내부에서 사용할 환경 변수 설정
+
+# 빌드 결과물을 Nginx의 웹 페이지 디렉토리에 복사
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Nginx 설정 파일 복사 (필요한 경우)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Nginx 설정 파일 복사
+COPY nginx.conf.template /etc/nginx/conf.d/default.conf
+
+# Nginx 실행 전에 환경 변수를 사용하여 설정 파일 내용 변경
+CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
 
 # 포트 노출
-EXPOSE 3000
+EXPOSE 80

@@ -5,6 +5,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args: # 빌드 시에 환경 변수 전달
+        DOMAIN: ${DOMAIN} # .env 파일의 DOMAIN 변수 사용
     ports:
       - "3000:80"
     restart: unless-stopped
+    environment:
+      - DOMAIN=${DOMAIN} # 컨테이너 내부에서도 환경 변수 사용
+    networks:
+      - npm-network
+
+networks:
+  npm-network:
+    external: true

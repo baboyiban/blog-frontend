@@ -8,7 +8,7 @@ services:
       args: # 빌드 시에 환경 변수 전달
         DOMAIN: ${DOMAIN} # .env 파일의 DOMAIN 변수 사용
     ports:
-      - "3000:80"
+      - "80:80"
     restart: unless-stopped
     env_file:
       - .env # .env 파일 지정
